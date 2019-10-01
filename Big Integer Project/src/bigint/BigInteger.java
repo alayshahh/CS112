@@ -73,6 +73,9 @@ public class BigInteger {
 	public static BigInteger parse(String integer) 
 	throws IllegalArgumentException {
 		BigInteger x= new BigInteger();
+		if (integer.length()==0) {
+			throw new IllegalArgumentException ("Incorrect Format");
+		}
 		Character ch=integer.charAt(0);
 		//check first character
 		int i =0;
@@ -85,11 +88,11 @@ public class BigInteger {
 		} else {
 			if(ch=='-') {
 				x.negative=true;
-				i++;
-				//integer = integer.substring(1);
+			
+				integer = integer.substring(1);
 			} else if(ch =='+') {
-				//integer = integer.substring(1);
-				i++;
+				integer = integer.substring(1);
+			
 			} 
 		}
 		//check rest of the string
@@ -102,14 +105,22 @@ public class BigInteger {
 			int y = Integer.parseInt(""+cho);
 			
 			if (x.front==null&&y==0&&integer.length()>1) {
+				integer = integer.substring(1);
+				i--;
+				System.out.println(integer.length());
 				continue;
 			}else if (x.front==null&&y==0&&integer.length()==1) {
+				
 				x.negative=false;
+				System.out.println("nullbigint");
+				return x;
+			}else {
+				x.numDigits++;
+				x.front= new DigitNode(y,x.front);
 			}
 				
 				
-			x.numDigits++;
-			x.front= new DigitNode(y,x.front);
+			
 		}
 	}
 	
@@ -146,8 +157,16 @@ public class BigInteger {
 		
 		String integer1= one.toString();
 		BigInteger first= parse(integer1);
+		if (first.front==null) {
+			first.front=new DigitNode(0,null);
+			first.numDigits++;		
+		}
 		String integer2= two.toString();
 		BigInteger second= parse(integer2);
+		if (second.front==null) {
+			second.front=new DigitNode(0,null);
+			second.numDigits++;		
+		}
 		
 		
 		BigInteger added = new BigInteger();
@@ -443,6 +462,8 @@ public class BigInteger {
 			}
 			
 		}
+		added=parse(added.toString());
+		System.out.println(added.front==null);
 		
 		return added;
 		
@@ -530,6 +551,9 @@ public class BigInteger {
 		}
 
 		product=parse(product.toString());
+		System.out.println("frist:"+first);
+		System.out.println("second:"+second);
+		System.out.println(product.front==null);
 		return product;
 	}
 	
