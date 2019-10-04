@@ -73,6 +73,7 @@ public class BigInteger {
 	public static BigInteger parse(String integer) 
 	throws IllegalArgumentException {
 		BigInteger x= new BigInteger();
+		integer=integer.trim();
 		if (integer.length()==0) {
 			throw new IllegalArgumentException ("Incorrect Format");
 		}
@@ -112,7 +113,7 @@ public class BigInteger {
 			}else if (x.front==null&&y==0&&integer.length()==1) {
 				
 				x.negative=false;
-				System.out.println("nullbigint");
+				System.out.println(x.numDigits);
 				return x;
 			}else {
 				x.numDigits++;
@@ -130,6 +131,7 @@ public class BigInteger {
 		/* IMPLEMENT THIS METHOD */
 		
 		// following line is a placeholder for compilation
+		System.out.println(x.numDigits);
 		return x;
 	}
 	
@@ -489,6 +491,8 @@ public class BigInteger {
 		BigInteger one= new BigInteger();
 		BigInteger two= new BigInteger();
 		BigInteger product= new BigInteger();
+		
+		
 		if( first.numDigits> second.numDigits) {
 		one=parse(second.toString());
 		two=parse(first.toString());
@@ -496,10 +500,15 @@ public class BigInteger {
 			one=parse(first.toString());
 			two=parse(second.toString());
 		}
+		
+		
 		//System.out.println("one="+one);
 		//System.out.println("two="+two);
+		
+		
 		DigitNode ptr1= one.front;
 		int carryint=0;
+		
 		for(int i=1 ;i<=one.numDigits&&ptr1!=null; ptr1=ptr1.next,i++) {
 			int j = i;
 			BigInteger x = new BigInteger();
